@@ -138,3 +138,27 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
     }
     return -1;
 }
+
+// ------------
+// HELP MESSAGE
+// ------------
+
+/// @brief Prints the version number
+void print_version()
+{
+    printf("v0.1.0");
+}
+
+/// @brief Prints the help message
+void print_help()
+{
+    printf("Usage: typwr [options]\n");
+    printf("\n");
+    printf("Options:\n");
+    printf("\n");
+    printf("  -c, --cpm <cpm>         Characters per minute (default: 500)\n");
+    printf("  -v, --variance <ms>     The variance in the cpm speed (default: 250)\n");
+    printf("\n");
+    printf("  -h, --help              Show this help message\n");
+    printf("  -V, --version           Show the version number\n");
+}

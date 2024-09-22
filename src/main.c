@@ -12,6 +12,18 @@
 // The main entry point of the application
 int main(int argc, char *argv[])
 {
+    if ((argc <= 2) && (contains(argv[1], "-h") || contains(argv[1], "--help")))
+    {
+        print_help();
+        return 0;
+    }
+
+    if ((argc <= 2) && (contains(argv[1], "-V") || contains(argv[1], "--version")))
+    {
+        print_version();
+        return 0;
+    }
+
     // Initialize the TypeWriter Configuration
     TypeWriterConfig config = {
         .text = NULL,

@@ -8,4 +8,7 @@ char *read_stdin_interactively();
 
 int parse_arguments(int argc, char *argv[], TypeWriterConfig *config);
 
+void print_version();
+void print_help();
+
 #endif CLI_H
