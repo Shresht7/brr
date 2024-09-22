@@ -34,7 +34,7 @@ void typewriter(const TypeWriterConfig *cfg)
         printf("%c", cfg->text[i]);
 
 #ifdef _WIN32
-        Sleep(pauseFor * 1000);
+        Sleep(pauseFor);
 #else
         usleep(pauseFor * 1000);
 #endif
