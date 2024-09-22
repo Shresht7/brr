@@ -62,30 +62,29 @@ char *read_stdin()
 }
 
 /// @brief Prompt the user for input and read the contents
-/// @param config The TypeWriter config to store the parsed text
-/// @return A status code indicating error or success
-int read_stdin_interactively(TypeWriterConfig *config)
+/// @return A string input by the user
+char *read_stdin_interactively()
 {
     char buffer[1024];
+    char *text;
 
-    printf("Enter text: ");
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
-        config->text = buffer;
+        text = buffer;
         // Remove newline character if present
-        size_t len = strlen(config->text);
-        if (len > 0 && config->text[len - 1] == '\n')
+        size_t len = strlen(text);
+        if (len > 0 && text[len - 1] == '\n')
         {
-            config->text[len - 1] = '\0';
+            text[len - 1] = '\0';
         }
     }
     else
     {
         fprintf(stderr, "Error reading input\n");
-        return 1;
+        exit(1);
     }
 
-    return -1;
+    return text;
 }
 
 /// @brief Returns true if the input contains the given string

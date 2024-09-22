@@ -34,7 +34,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-        read_stdin_interactively(&config);
+        printf("Enter text: ");
+        config.text = read_stdin_interactively();
     }
 
     // Write it to the console like a typewriter
