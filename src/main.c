@@ -34,10 +34,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        // If input is interactive (from a terminal), show an "Unsupported" message
-        // TODO: Print the help message
-        fprintf(stderr, "No Input");
-        exit(1);
+        read_stdin_interactively(&config);
     }
 
     // Write it to the console like a typewriter
