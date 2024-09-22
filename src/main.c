@@ -63,18 +63,46 @@ char *read_stdin()
     return buffer;
 }
 
+/// @brief Parse the command-line arguments
+/// @param argc The total count of arguments passed in
+/// @param argv The vector containing the arguments
+/// @param cfg The TypeWriter Configuration object to update
+/// @return Exit Status Code
+int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
+{
+    for (int i = 0; i < argc; i++)
+    {
+        if ((strcmp(argv[i], "-c") == 0) || (strcmp(argv[i], "--cpm") == 0))
+        {
+            if (i + 1 < argc)
+            {
+                cfg->cpm = atoi(argv[++i]);
+            }
+            else
+            {
+                fprintf(stderr, "Error: -c/--cpm option requires an argument\n");
+                return 1;
+            }
+        }
+    }
+    return 0; // Exit Code: Success
+}
+
 // ====
 // MAIN
 // ====
 
 // The main entry point of the application
-int main()
+int main(int argc, char *argv[])
 {
     // Initialize the TypeWriter Configuration
     TypeWriterConfig config = {
         .text = NULL,
         .cpm = 750,
     };
+
+    // Parse the command-line arguments
+    parse_arguments(argc, argv, &config);
 
     // Read the text from STDIN
     config.text = read_stdin();
