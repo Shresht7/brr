@@ -55,4 +55,5 @@ dkms.conf
 .vscode
 
 # Executable Binaries
-bin
+build
+CMakePresets.json
