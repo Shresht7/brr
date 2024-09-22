@@ -19,7 +19,11 @@ int main(int argc, char *argv[])
     };
 
     // Parse the command-line arguments
-    parse_arguments(argc, argv, &config);
+    int result = parse_arguments(argc, argv, &config);
+    if (result != -1)
+    {
+        return result;
+    }
 
     // Read the text from STDIN
     config.text = read_stdin();

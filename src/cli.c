@@ -48,7 +48,7 @@ char *read_stdin()
 /// @param argc The total count of arguments passed in
 /// @param argv The vector containing the arguments
 /// @param cfg The TypeWriter Configuration object to update
-/// @return Exit Status Code
+/// @return 1 if there was an error or -1 if there was no error
 int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
 {
     for (int i = 0; i < argc; i++)
@@ -66,5 +66,5 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
             }
         }
     }
-    return 0; // Exit Code: Success
+    return -1;
 }
