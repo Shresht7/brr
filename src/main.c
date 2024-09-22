@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// isatty is undefined in Windows. _isatty must be used from the io.h library
-#ifdef _WIN32
-#include <io.h>
-#endif
-
 #include "typewriter.h"
 #include "cli.h"
 
@@ -55,13 +50,4 @@ int main(int argc, char *argv[])
     }
 
     return 0; // Exit code 0 for success
-}
-
-int is_interactive(FILE *stream)
-{
-#ifdef _WIN32
-    return _isatty(_fileno(stream));
-#else
-    return isatty(_fileno(stream));
-#endif
 }

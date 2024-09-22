@@ -2,7 +2,24 @@
 #include <stdlib.h>
 #include <string.h>
 
+// isatty is undefined in Windows. _isatty must be used from the io.h library
+#ifdef _WIN32
+#include <io.h>
+#endif
+
 #include "typewriter.h"
+
+/// @brief Returns a boolean indicating whether this is an interactive terminal session or not
+/// @param stream The file descriptor to check
+/// @return 1 if this is an interactive terminal or 0 if it is a redirected file
+int is_interactive(FILE *stream)
+{
+#ifdef _WIN32
+    return _isatty(_fileno(stream));
+#else
+    return isatty(_fileno(stream));
+#endif
+}
 
 /// @brief Read the contents from `STDIN`
 /// @return A string
