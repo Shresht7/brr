@@ -14,8 +14,9 @@
 
 typedef struct
 {
-    char *text; // The text to write
-    int cpm;    // The Characters-Per-Minute speed
+    char *text;   // The text to write
+    int cpm;      // The Characters-Per-Minute speed
+    int variance; // The variance in the Characters-Per-Minute speed value
 } TypeWriterConfig;
 
 // ---------
@@ -26,11 +27,16 @@ typedef struct
 /// @param text The text to write to the screen
 void typewriter(const TypeWriterConfig *cfg)
 {
-    size_t len = strlen(cfg->text);
-    int pauseFor = (60 * 1000) / cfg->cpm;
+    srand(time(NULL)); // Seed the random number generator
 
+    int speed_lower_bound = cfg->cpm - cfg->variance;
+    int speed_upper_bound = cfg->cpm + cfg->variance;
+
+    size_t len = strlen(cfg->text);
     for (int i = 0; i < len; i++)
     {
+        int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
+        int pauseFor = (60 * 1000) / speed;
         printf("%c", cfg->text[i]);
 
 #ifdef _WIN32
@@ -39,4 +45,9 @@ void typewriter(const TypeWriterConfig *cfg)
         usleep(pauseFor * 1000);
 #endif
     }
+}
+
+int get_random_number_between(int lower, int upper)
+{
+    return (rand() % (upper - lower + 1)) + lower;
 }

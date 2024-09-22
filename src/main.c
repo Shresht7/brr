@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
     // Initialize the TypeWriter Configuration
     TypeWriterConfig config = {
         .text = NULL,
-        .cpm = 750,
+        .cpm = 500,
+        .variance = 250,
     };
 
     // Parse the command-line arguments

@@ -5,10 +5,7 @@ typedef struct
 {
     char *text;
     int cpm;
-    int speed;
-    int minSpeed;
-    char *pauseAt;
-    int pauseMultiplier;
+    int variance;
 } TypeWriterConfig;
 
 void typewriter(const TypeWriterConfig *config);
