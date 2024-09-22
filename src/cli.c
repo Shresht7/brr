@@ -61,6 +61,13 @@ char *read_stdin()
     return buffer;
 }
 
+/// @brief Returns true if the input contains the given string
+/// @return a boolean indicating if the input contains the given string
+int contains(char *input, char *str)
+{
+    return strcmp(input, str) == 0;
+}
+
 /// @brief Parse the command-line arguments
 /// @param argc The total count of arguments passed in
 /// @param argv The vector containing the arguments
@@ -96,11 +103,4 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
         }
     }
     return -1;
-}
-
-/// @brief Returns true if the input contains the given string
-/// @return a boolean indicating if the input contains the given string
-int contains(char *input, char *str)
-{
-    return strcmp(input, str) == 0;
 }
