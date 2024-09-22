@@ -53,7 +53,7 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
 {
     for (int i = 0; i < argc; i++)
     {
-        if ((strcmp(argv[i], "-c") == 0) || (strcmp(argv[i], "--cpm") == 0))
+        if ((contains(argv[i], "-c")) || (contains(argv[i], "--cpm")))
         {
             if (i + 1 < argc)
             {
@@ -65,6 +65,25 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
                 return 1;
             }
         }
+        else if ((contains(argv[i], "-v") || contains(argv[i], "--variance")))
+        {
+            if (i + 1 < argc)
+            {
+                cfg->variance = atoi(argv[++i]);
+            }
+            else
+            {
+                fprintf(stderr, "Error: -v/--variance option requires an argument");
+                return 1;
+            }
+        }
     }
     return -1;
+}
+
+/// @brief Returns true if the input contains the given string
+/// @return a boolean indicating if the input contains the given string
+int contains(char *input, char *str)
+{
+    return strcmp(input, str) == 0;
 }
