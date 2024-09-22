@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+// isatty is undefined in Windows. _isatty must be used from the io.h library
+#ifdef _WIN32
+#include <io.h>
+#endif
+
 #include "typewriter.h"
 #include "cli.h"
 
@@ -27,7 +32,7 @@ int main(int argc, char *argv[])
     }
 
     // Check if input is interactive (from a terminal) or redirected (from a file descriptor like STDIN)
-    if (!isatty(fileno(stdin)))
+    if (!is_interactive(stdin))
     {
         // Read the text from standard input (STDIN)
         config.text = read_stdin();
@@ -44,10 +49,19 @@ int main(int argc, char *argv[])
     typewriter(&config);
 
     // Free the allocated memory
-    if (!isatty(fileno(stdin)))
+    if (!is_interactive(stdin))
     {
         free(config.text);
     }
 
     return 0; // Exit code 0 for success
+}
+
+int is_interactive(FILE *stream)
+{
+#ifdef _WIN32
+    return _isatty(_fileno(stream));
+#else
+    return isatty(_fileno(stream));
+#endif
 }
