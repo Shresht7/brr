@@ -14,9 +14,11 @@
 
 typedef struct
 {
-    char *text;   // The text to write
-    int cpm;      // The Characters-Per-Minute speed
-    int variance; // The variance in the Characters-Per-Minute speed value
+    char *text;            // The text to write
+    int cpm;               // The Characters-Per-Minute speed
+    int variance;          // The variance in the Characters-Per-Minute speed value
+    char *pauseAt;         // Characters to pause at
+    float pauseMultiplier; // The ratio by which to increase the pause delay
 } TypeWriterConfig;
 
 // ---------
@@ -37,6 +39,12 @@ void typewriter(const TypeWriterConfig *cfg)
     {
         int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
         int pauseFor = (60 * 1000) / speed;
+
+        if (strchr(cfg->pauseAt, cfg->text[i]))
+        {
+            pauseFor *= cfg->pauseMultiplier;
+        }
+
         printf("%c", cfg->text[i]);
 
 #ifdef _WIN32

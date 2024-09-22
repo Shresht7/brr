@@ -6,6 +6,8 @@ typedef struct
     char *text;
     int cpm;
     int variance;
+    char *pauseAt;
+    float pauseMultiplier;
 } TypeWriterConfig;
 
 void typewriter(const TypeWriterConfig *config);

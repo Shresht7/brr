@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
         .text = NULL,
         .cpm = 500,
         .variance = 250,
+        .pauseAt = "\n",
+        .pauseMultiplier = 3.0,
     };
 
     // Parse the command-line arguments
