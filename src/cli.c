@@ -9,6 +9,10 @@
 
 #include "typewriter.h"
 
+// ================
+// STDIN / TERMINAL
+// ================
+
 /// @brief Returns a boolean indicating whether this is an interactive terminal session or not
 /// @param stream The file descriptor to check
 /// @return 1 if this is an interactive terminal or 0 if it is a redirected file
@@ -86,6 +90,10 @@ char *read_stdin_interactively()
 
     return text;
 }
+
+// ===============
+// ARGUMENT PARSER
+// ===============
 
 /// @brief Returns true if the input contains the given string
 /// @return a boolean indicating if the input contains the given string
