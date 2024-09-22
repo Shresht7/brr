@@ -3,15 +3,22 @@
 #include <unistd.h>
 #include <time.h>
 
+typedef struct
+{
+    char *text; // The text to write
+    int cpm;    // The Characters-Per-Minute speed
+} TypeWriterConfig;
+
 /// @brief Writes the given text like a typewriter
 /// @param text The text to write to the screen
-void typewriter(const char *text)
+void typewriter(const TypeWriterConfig *cfg)
 {
-    int pauseFor = 100;
-    while (*text)
+    int len = strlen(cfg->text);
+    int pauseFor = (60 * 1000) / cfg->cpm;
+
+    for (int i = 0; i < len; i++)
     {
-        printf("%c", *text);
-        text++;
+        printf("%c", cfg->text[i]);
         usleep(pauseFor * 1000);
     }
 }
@@ -63,15 +70,20 @@ char *read_stdin()
 // The main entry point of the application
 int main()
 {
+    // Initialize the TypeWriter Configuration
+    TypeWriterConfig config = {
+        .text = NULL,
+        .cpm = 750,
+    };
 
     // Read the text from STDIN
-    char *text = read_stdin();
+    config.text = read_stdin();
 
     // Write it to the console like a typewriter
-    typewriter(text);
+    typewriter(&config);
 
     // Free the allocated memory
-    free(text);
+    free(config.text);
 
     return 0; // Exit code 0 for success
 }
