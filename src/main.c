@@ -26,14 +26,28 @@ int main(int argc, char *argv[])
         return result;
     }
 
-    // Read the text from STDIN
-    config.text = read_stdin();
+    // Check if input is interactive (from a terminal) or redirected (from a file descriptor like STDIN)
+    if (!isatty(fileno(stdin)))
+    {
+        // Read the text from standard input (STDIN)
+        config.text = read_stdin();
+    }
+    else
+    {
+        // If input is interactive (from a terminal), show an "Unsupported" message
+        // TODO: Print the help message
+        fprintf(stderr, "No Input");
+        exit(1);
+    }
 
     // Write it to the console like a typewriter
     typewriter(&config);
 
     // Free the allocated memory
-    free(config.text);
+    if (!isatty(fileno(stdin)))
+    {
+        free(config.text);
+    }
 
     return 0; // Exit code 0 for success
 }
