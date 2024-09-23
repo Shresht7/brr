@@ -46,6 +46,7 @@ void typewriter(const TypeWriterConfig *cfg)
         }
 
         printf("%c", cfg->text[i]);
+        fflush(stdout); // Ensure the character is printed immediately
 
 #ifdef _WIN32
         Sleep(pauseFor);
