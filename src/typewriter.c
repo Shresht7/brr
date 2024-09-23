@@ -56,6 +56,16 @@ void typewriter(const TypeWriterConfig *cfg)
     }
 }
 
+/// @brief Free dynamically allocated memory
+/// @param config
+void free_config(TypeWriterConfig *config)
+{
+    if (config->text)
+    {
+        free(config->text);
+    }
+}
+
 int get_random_number_between(int lower, int upper)
 {
     if (lower > upper)

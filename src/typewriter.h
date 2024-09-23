@@ -12,4 +12,6 @@ typedef struct
 
 void typewriter(const TypeWriterConfig *config);
 
+void free_config(TypeWriterConfig *config);
+
 #endif // TYPEWRITER_H

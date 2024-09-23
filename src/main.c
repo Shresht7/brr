@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     int result = parse_arguments(argc, argv, &config);
     if (result != -1)
     {
+        free_config(&config);
         return result;
     }
 
@@ -47,21 +48,29 @@ int main(int argc, char *argv[])
     {
         // Read the text from standard input (STDIN)
         config.text = read_stdin();
+        if (!config.text)
+        {
+            fprintf(stderr, "Error: Failed to read from STDIN\n");
+            free_config(&config);
+            return EXIT_FAILURE;
+        }
     }
     else
     {
         printf("Enter text: ");
         config.text = read_stdin_interactively();
+        if (!config.text)
+        {
+            fprintf(stderr, "Error: Failed to read from STDIN interactively\n");
+            free_config(&config);
+            return EXIT_FAILURE;
+        }
     }
 
     // Write it to the console like a typewriter
     typewriter(&config);
 
     // Free the allocated memory
-    if (!is_interactive(stdin))
-    {
-        free(config.text);
-    }
-
+    free_config(&config);
     return 0; // Exit code 0 for success
 }
