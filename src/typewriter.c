@@ -58,5 +58,10 @@ void typewriter(const TypeWriterConfig *cfg)
 
 int get_random_number_between(int lower, int upper)
 {
+    if (lower > upper)
+    {
+        fprintf(stderr, "Invalid bounds for random number generation\n");
+        exit(EXIT_FAILURE);
+    }
     return (rand() % (upper - lower + 1)) + lower;
 }
