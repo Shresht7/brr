@@ -27,12 +27,18 @@ int main(int argc, char *argv[])
     }
 
     // Initialize the TypeWriter Configuration
+    struct PauseChar pauseChars[] = {
+        {'\n', 3.0},
+        {' ', 1.5},
+        {'.', 2.0},
+        {',', 1.75},
+    };
     TypeWriterConfig config = {
         .text = NULL,
         .cpm = 500,
         .variance = 250,
-        .pauseAt = "\n",
-        .pauseMultiplier = 3.0,
+        .pauseCharCount = 4,
+        .pauseChars = pauseChars,
     };
 
     // Parse the command-line arguments

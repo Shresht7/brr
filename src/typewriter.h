@@ -6,8 +6,12 @@ typedef struct
     char *text;
     int cpm;
     int variance;
-    char *pauseAt;
-    float pauseMultiplier;
+    int pauseCharCount;
+    struct PauseChar
+    {
+        char character;   // Character to pause at
+        float multiplier; // Multiplier for the pause duration
+    } *pauseChars;        // Array of pause characters and their multipliers
 } TypeWriterConfig;
 
 void typewriter(const TypeWriterConfig *config);
