@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
             // If a keypress is detected, then exit immediately
             if (key_pressed())
             {
-                return;
+                break;
             }
         } while (config.loop);
         exit_alt_buffer();
