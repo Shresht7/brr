@@ -80,6 +80,8 @@ int main(int argc, char *argv[])
     if (config.loop)
     {
         enter_alt_buffer();
+        clear_screen();
+        move_cursor_to_home();
         do
         {
             typewriter(&config);
