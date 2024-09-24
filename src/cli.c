@@ -8,6 +8,7 @@
 #endif
 
 #include "typewriter.h"
+#include "helpers.h"
 
 // ================
 // STDIN / TERMINAL
@@ -74,7 +75,7 @@ char *read_stdin_interactively()
 
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
-        text = buffer;
+        strcpy_s(text, sizeof(buffer), buffer);
         // Remove newline character if present
         size_t len = strlen(text);
         if (len > 0 && text[len - 1] == '\n')
