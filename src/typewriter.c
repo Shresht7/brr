@@ -2,12 +2,6 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef _WIN32
-#include <windows.h> // For Sleep function on Windows
-#else
-#include <unistd.h> // For usleep function on UNIX based systems
-#endif
-
 // ------------------------
 // TYPEWRITER CONFIGURATION
 // ------------------------
@@ -25,25 +19,19 @@ typedef struct
     } *pauseChars;        // Array of pause characters and their multipliers
 } TypeWriterConfig;
 
+/// @brief Free dynamically allocated memory
+/// @param config
+void free_config(TypeWriterConfig *config)
+{
+    if (config->text)
+    {
+        free(config->text);
+    }
+}
+
 // ---------
 // EXECUTION
 // ---------
-
-/// @brief Returns a random number between the given range
-/// @param lower The lower bound
-/// @param upper The upper bound
-/// @return A random number between lower and upper.
-int get_random_number_between(int lower, int upper)
-{
-    if (lower > upper)
-    {
-        // Swap lower and upper bounds
-        int temp = lower;
-        lower = upper;
-        upper = temp;
-    }
-    return (rand() % (upper - lower + 1)) + lower;
-}
 
 /// @brief Determines if a character should cause a pause
 /// @param cfg The TypeWriterConfig containing pause characters
@@ -59,16 +47,6 @@ float get_pause_multiplier(const TypeWriterConfig *cfg, char c)
         }
     }
     return 1.0;
-}
-/// @brief Platform Independent Sleep
-/// @param duration The duration in milliseconds to sleep for
-void sleep(int duration)
-{
-#ifdef _WIN32
-    Sleep(duration);
-#else
-    usleep(duration * 1000);
-#endif
 }
 
 /// @brief Writes the given text like a typewriter
@@ -113,15 +91,5 @@ void typewriter(const TypeWriterConfig *cfg)
             pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
             sleep(pauseFor);
         }
-    }
-}
-
-/// @brief Free dynamically allocated memory
-/// @param config
-void free_config(TypeWriterConfig *config)
-{
-    if (config->text)
-    {
-        free(config->text);
     }
 }
