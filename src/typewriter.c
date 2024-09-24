@@ -3,9 +3,9 @@
 #include <time.h>
 
 #ifdef _WIN32
-#include <windows.h>
+#include <windows.h> // For Sleep function on Windows
 #else
-#include <unistd.h>
+#include <unistd.h> // For usleep function on UNIX based systems
 #endif
 
 // ------------------------
@@ -32,9 +32,16 @@ typedef struct
 /// @brief Returns a random number between the given range
 /// @param lower The lower bound
 /// @param upper The upper bound
-/// @return A random number between lower and upper
+/// @return A random number between lower and upper.
 int get_random_number_between(int lower, int upper)
 {
+    if (lower > upper)
+    {
+        // Swap lower and upper bounds
+        int temp = lower;
+        lower = upper;
+        upper = temp;
+    }
     return (rand() % (upper - lower + 1)) + lower;
 }
 
