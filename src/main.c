@@ -73,18 +73,15 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (config.loop)
-    {
-        enter_alt_buffer();
-    }
+#ifndef _WIN32
+    set_terminal_mode();
+#endif
 
-    // Write it to the console like a typewriter
     typewriter(&config);
 
-    if (config.loop)
-    {
-        exit_alt_buffer();
-    }
+#ifndef _WIN32
+    reset_terminal_mode();
+#endif
 
     // Free the allocated memory
     if (!is_interactive(stdin))
