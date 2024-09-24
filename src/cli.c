@@ -161,3 +161,19 @@ void print_help()
     printf("  -h, --help              Show this help message\n");
     printf("  -V, --version           Show the version number\n");
 }
+
+// ----
+// ANSI
+// ----
+
+/// @brief Enter the Alternate Buffer Screen
+void enter_alt_buffer()
+{
+    printf("\x1b[?1049h");
+}
+
+/// @brief Exit the Alternate Buffer Screen
+void exit_alt_buffer()
+{
+    printf("\x1b[?1049l");
+}

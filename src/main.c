@@ -73,8 +73,12 @@ int main(int argc, char *argv[])
         }
     }
 
+    enter_alt_buffer();
+
     // Write it to the console like a typewriter
     typewriter(&config);
+
+    exit_alt_buffer();
 
     // Free the allocated memory
     if (!is_interactive(stdin))
