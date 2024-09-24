@@ -133,6 +133,18 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
         {
             cfg->loop = 1;
         }
+        else if ((contains(argv[i], "-p") || contains(argv[i], "--pause")))
+        {
+            if (i + 1 < argc)
+            {
+                cfg->pauseMultiplier = atof(argv[++i]);
+            }
+            else
+            {
+                fprintf(stderr, "Error: -p/--pause option requires an argument");
+                return 1;
+            }
+        }
     }
     return -1;
 }
@@ -156,6 +168,7 @@ void print_help()
     printf("\n");
     printf("  -c, --cpm <cpm>         Characters per minute (default: 500)\n");
     printf("  -v, --variance <ms>     The variance in the cpm speed (default: 250)\n");
+    printf("  -v, --pause <factor>    The rate at which to slow down the speed when typing hard to type characters (default 2.0)\n");
     printf("  -l, --loop              Repeat typing the same content indefinitely (Press any key to quit)\n");
     printf("\n");
     printf("  -h, --help              Show this help message\n");
