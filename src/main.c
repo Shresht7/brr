@@ -83,8 +83,7 @@ int main(int argc, char *argv[])
         do
         {
             typewriter(&config);
-            printf("\x1b[2J"); // Clear the screen
-            printf("\x1b[H");  // Move cursor to the top-left corner
+            printf("\n");
         } while (config.loop);
         exit_alt_buffer();
     }
