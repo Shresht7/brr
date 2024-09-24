@@ -38,6 +38,22 @@ int get_random_number_between(int lower, int upper)
     return (rand() % (upper - lower + 1)) + lower;
 }
 
+/// @brief Determines if a character should cause a pause
+/// @param cfg The TypeWriterConfig containing pause characters
+/// @param c The character to check
+/// @return The pause multiplier if the character should cause a pause, otherwise 1.0
+float get_pause_multiplier(const TypeWriterConfig *cfg, char c)
+{
+    for (int i = 0; i < cfg->pauseCharCount; i++)
+    {
+        if (cfg->pauseChars[i].character == c)
+        {
+            return cfg->pauseChars[i].multiplier;
+        }
+    }
+    return 1.0;
+}
+
 /// @brief Writes the given text like a typewriter
 /// @param text The text to write to the screen
 void typewriter(const TypeWriterConfig *cfg)
@@ -52,16 +68,7 @@ void typewriter(const TypeWriterConfig *cfg)
     {
         int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
         int pauseFor = (60 * 1000) / speed;
-
-        // Check if current character matches any pause character and adjust pauseFor accordingly
-        for (int j = 0; j < cfg->pauseCharCount; j++)
-        {
-            if (cfg->text[i] == cfg->pauseChars[j].character)
-            {
-                pauseFor *= cfg->pauseChars[j].multiplier;
-                break;
-            }
-        }
+        pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
 
         printf("%c", cfg->text[i]);
         fflush(stdout); // Ensure the character is printed immediately
