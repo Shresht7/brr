@@ -2,12 +2,6 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
-
 // ------------------------
 // TYPEWRITER CONFIGURATION
 // ------------------------
@@ -23,20 +17,22 @@ typedef struct
         char character;   // Character to pause at
         float multiplier; // Multiplier for the pause duration
     } *pauseChars;        // Array of pause characters and their multipliers
+    int loop;             // Should loop indefinitely until closed
 } TypeWriterConfig;
+
+/// @brief Free dynamically allocated memory
+/// @param config
+void free_config(TypeWriterConfig *config)
+{
+    if (config->text)
+    {
+        free(config->text);
+    }
+}
 
 // ---------
 // EXECUTION
 // ---------
-
-/// @brief Returns a random number between the given range
-/// @param lower The lower bound
-/// @param upper The upper bound
-/// @return A random number between lower and upper
-int get_random_number_between(int lower, int upper)
-{
-    return (rand() % (upper - lower + 1)) + lower;
-}
 
 /// @brief Determines if a character should cause a pause
 /// @param cfg The TypeWriterConfig containing pause characters
@@ -52,16 +48,6 @@ float get_pause_multiplier(const TypeWriterConfig *cfg, char c)
         }
     }
     return 1.0;
-}
-/// @brief Platform Independent Sleep
-/// @param duration The duration in milliseconds to sleep for
-void sleep(int duration)
-{
-#ifdef _WIN32
-    Sleep(duration);
-#else
-    usleep(duration * 1000);
-#endif
 }
 
 /// @brief Writes the given text like a typewriter
@@ -79,6 +65,12 @@ void typewriter(const TypeWriterConfig *cfg)
     size_t len = strlen(cfg->text);
     for (int i = 0; i < len; i++)
     {
+        // If a keypress is detected, then exit immediately
+        if (key_pressed())
+        {
+            return;
+        }
+
         printf("%c", cfg->text[i]);
         fflush(stdout); // Ensure the character is printed immediately
 
@@ -106,15 +98,5 @@ void typewriter(const TypeWriterConfig *cfg)
             pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
             sleep(pauseFor);
         }
-    }
-}
-
-/// @brief Free dynamically allocated memory
-/// @param config
-void free_config(TypeWriterConfig *config)
-{
-    if (config->text)
-    {
-        free(config->text);
     }
 }

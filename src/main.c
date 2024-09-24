@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     }
 
     // Initialize the TypeWriter Configuration
+    // TODO: Move this to a different file and add other characters like brackets etc. Anything other than lowercase alphabets should cause slowdowns
     struct PauseChar pauseChars[] = {
         {'\n', 3.0},
         {' ', 1.5},
@@ -63,6 +64,7 @@ int main(int argc, char *argv[])
     }
     else
     {
+        // Read text from the terminal interactively
         printf("Enter text: ");
         config.text = read_stdin_interactively();
         if (!config.text)
@@ -73,8 +75,46 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Write it to the console like a typewriter
-    typewriter(&config);
+// Setup key-capture on non-windows os
+#ifndef _WIN32
+    set_terminal_mode();
+#endif
+
+    // If we are to continuously loop ...
+    if (config.loop)
+    {
+        // Switch to the alternate buffer for rendering
+        enter_alt_buffer();
+        clear_screen();
+        move_cursor_to_home();
+
+        do
+        {
+            // ...Run the typewriter
+            typewriter(&config);
+            printf("\n");
+
+            // If a keypress is detected, then exit immediately
+            if (key_pressed())
+            {
+                get_pressed_key(); // Consume the key so that it doesn't bleed out
+                break;
+            }
+
+        } while (config.loop);
+
+        exit_alt_buffer();
+    }
+    else
+    {
+        // ... Otherwise, run the typewriter once
+        typewriter(&config);
+    }
+
+// Reset terminal setup for key capture on non-windows os
+#ifndef _WIN32
+    reset_terminal_mode();
+#endif
 
     // Free the allocated memory
     if (!is_interactive(stdin))

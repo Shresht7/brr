@@ -8,6 +8,7 @@
 #endif
 
 #include "typewriter.h"
+#include "helpers.h"
 
 // ================
 // STDIN / TERMINAL
@@ -70,11 +71,11 @@ char *read_stdin()
 char *read_stdin_interactively()
 {
     char buffer[1024];
-    char *text;
+    char *text = "";
 
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
-        text = buffer;
+        strcpy_s(text, sizeof(buffer), buffer);
         // Remove newline character if present
         size_t len = strlen(text);
         if (len > 0 && text[len - 1] == '\n')
@@ -94,13 +95,6 @@ char *read_stdin_interactively()
 // ===============
 // ARGUMENT PARSER
 // ===============
-
-/// @brief Returns true if the input contains the given string
-/// @return a boolean indicating if the input contains the given string
-int contains(char *input, char *str)
-{
-    return strcmp(input, str) == 0;
-}
 
 /// @brief Parse the command-line arguments
 /// @param argc The total count of arguments passed in
@@ -135,6 +129,10 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
                 return 1;
             }
         }
+        else if ((contains(argv[i], "-l") || contains(argv[i], "--loop")))
+        {
+            cfg->loop = 1;
+        }
     }
     return -1;
 }
@@ -158,7 +156,36 @@ void print_help()
     printf("\n");
     printf("  -c, --cpm <cpm>         Characters per minute (default: 500)\n");
     printf("  -v, --variance <ms>     The variance in the cpm speed (default: 250)\n");
+    printf("  -l, --loop              Repeat typing the same content indefinitely (Press any key to quit)\n");
     printf("\n");
     printf("  -h, --help              Show this help message\n");
     printf("  -V, --version           Show the version number\n");
+}
+
+// ----
+// ANSI
+// ----
+
+/// @brief Enter the Alternate Buffer Screen
+void enter_alt_buffer()
+{
+    printf("\x1b[?1049h");
+}
+
+/// @brief Exit the Alternate Buffer Screen
+void exit_alt_buffer()
+{
+    printf("\x1b[?1049l");
+}
+
+/// @brief Clear the screen
+void clear_screen()
+{
+    printf("\x1b[2J");
+}
+
+/// @brief Move cursor to the top left
+void move_cursor_to_home()
+{
+    printf("\x1b[H");
 }
