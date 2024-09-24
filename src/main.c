@@ -77,6 +77,10 @@ int main(int argc, char *argv[])
     typewriter(&config);
 
     // Free the allocated memory
-    free_config(&config);
+    if (!is_interactive(stdin))
+    {
+        free_config(&config);
+    }
+
     return 0; // Exit code 0 for success
 }
