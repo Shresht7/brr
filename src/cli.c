@@ -156,7 +156,7 @@ void print_help()
     printf("\n");
     printf("  -c, --cpm <cpm>         Characters per minute (default: 500)\n");
     printf("  -v, --variance <ms>     The variance in the cpm speed (default: 250)\n");
-    printf("  -l, --loop              Repeat typing the same content indefinitely (Ctrl+C to close the program)\n");
+    printf("  -l, --loop              Repeat typing the same content indefinitely (Press any key to quit)\n");
     printf("\n");
     printf("  -h, --help              Show this help message\n");
     printf("  -V, --version           Show the version number\n");
