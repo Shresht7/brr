@@ -75,7 +75,7 @@ void typewriter(const TypeWriterConfig *cfg)
             int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
             int pauseFor = (60 * 1000) / speed;
             // Apply multiplier if the character is not a lowercase alphabet
-            if (cfg->text[i] < 'a' || cfg->text[i] > 'z')
+            if ((cfg->text[i] != ' ') && (cfg->text[i] < 'a' || cfg->text[i] > 'z'))
             {
                 pauseFor *= cfg->pauseMultiplier;
             }
