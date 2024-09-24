@@ -171,8 +171,11 @@ const char *HELP_MESSAGE = "\nUsage: typwr [OPTIONS]\n"
                            "  -l, --loop               Repeat typing the same content indefinitely until a key is pressed\n"
                            "\n"
                            "  -h, --help               Show the help message\n"
-                           "  -V, --version            Show the version number\n\n";
-// TODO: Add examples here...
+                           "  -V, --version            Show the version number\n"
+                           "\n"
+                           "Examples:\n"
+                           "\n"
+                           "  cat file.txt | typwr     Pipe the text in\n\n";
 
 /// @brief Prints the help message
 void print_help()
