@@ -71,7 +71,7 @@ char *read_stdin()
 char *read_stdin_interactively()
 {
     char buffer[1024];
-    char *text;
+    char *text = "";
 
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
