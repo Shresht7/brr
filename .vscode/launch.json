@@ -10,7 +10,14 @@
             "name": "Debug",
             "program": "${workspaceFolder}/out/build/GCC 13.2.0 x86_64-w64-mingw32/Debug/typwr.exe",
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "stdio": [
+                "./src/main.c",
+                null,
+                null
+            ],
+            "preLaunchTask": "CMake: build"
         }
     ]
 }
