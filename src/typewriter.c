@@ -53,6 +53,16 @@ float get_pause_multiplier(const TypeWriterConfig *cfg, char c)
     }
     return 1.0;
 }
+/// @brief Platform Independent Sleep
+/// @param duration The duration in milliseconds to sleep for
+void sleep(int duration)
+{
+#ifdef _WIN32
+    Sleep(duration);
+#else
+    usleep(duration * 1000);
+#endif
+}
 
 /// @brief Writes the given text like a typewriter
 /// @param text The text to write to the screen
@@ -66,18 +76,13 @@ void typewriter(const TypeWriterConfig *cfg)
     size_t len = strlen(cfg->text);
     for (int i = 0; i < len; i++)
     {
-        int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
-        int pauseFor = (60 * 1000) / speed;
-        pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
-
         printf("%c", cfg->text[i]);
         fflush(stdout); // Ensure the character is printed immediately
 
-#ifdef _WIN32
-        Sleep(pauseFor);
-#else
-        usleep(pauseFor * 1000);
-#endif
+        int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
+        int pauseFor = (60 * 1000) / speed;
+        pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
+        sleep(pauseFor);
     }
 }
 
