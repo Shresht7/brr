@@ -180,6 +180,17 @@ void print_help()
     printf("%s", HELP_MESSAGE);
 }
 
+/// @brief Types the help message as a demonstration
+void type_help()
+{
+    TypeWriterConfig config = {
+        .cpm = 5000,
+        .variance = 2500,
+        .pauseMultiplier = 3.0,
+    };
+    typewriter(HELP_MESSAGE, &config);
+}
+
 // ----
 // ANSI
 // ----

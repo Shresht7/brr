@@ -15,7 +15,14 @@ int main(int argc, char *argv[])
     // `-h` and `--help`: Show help message
     if ((argc <= 1) || (contains(argv[1], "-h") || contains(argv[1], "--help")))
     {
-        print_help();
+        if (contains(argv[1], "-h"))
+        {
+            print_help();
+        }
+        else
+        {
+            type_help();
+        }
         return 0;
     }
 

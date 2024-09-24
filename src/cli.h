@@ -10,6 +10,7 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *config);
 
 void print_version();
 void print_help();
+void type_help();
 
 void enter_alt_buffer();
 void exit_alt_buffer();
