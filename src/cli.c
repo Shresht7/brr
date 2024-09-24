@@ -153,26 +153,31 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
 // HELP MESSAGE
 // ------------
 
+const char *VERSION = "v0.1.0";
+
 /// @brief Prints the version number
 void print_version()
 {
-    printf("v0.1.0");
+    printf("%s", VERSION);
 }
+
+const char *HELP_MESSAGE = "\nUsage: typwr [OPTIONS]\n"
+                           "\n"
+                           "Options:\n"
+                           "\n"
+                           "  -c, --cpm <number>       Characters per Minute (default: 500)\n"
+                           "  -v, --variance <number>  The variance in cpm speed (default: 250)\n"
+                           "  -p, --pause <number>     The rate by which to slow down the speed when typing hard to type characters (default: 2.0)\n"
+                           "  -l, --loop               Repeat typing the same content indefinitely until a key is pressed\n"
+                           "\n"
+                           "  -h, --help               Show the help message\n"
+                           "  -V, --version            Show the version number\n\n";
+// TODO: Add examples here...
 
 /// @brief Prints the help message
 void print_help()
 {
-    printf("Usage: typwr [options]\n");
-    printf("\n");
-    printf("Options:\n");
-    printf("\n");
-    printf("  -c, --cpm <cpm>         Characters per minute (default: 500)\n");
-    printf("  -v, --variance <ms>     The variance in the cpm speed (default: 250)\n");
-    printf("  -v, --pause <factor>    The rate at which to slow down the speed when typing hard to type characters (default 2.0)\n");
-    printf("  -l, --loop              Repeat typing the same content indefinitely (Press any key to quit)\n");
-    printf("\n");
-    printf("  -h, --help              Show this help message\n");
-    printf("  -V, --version           Show the version number\n");
+    printf("%s", HELP_MESSAGE);
 }
 
 // ----
