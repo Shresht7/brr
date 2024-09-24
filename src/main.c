@@ -27,19 +27,11 @@ int main(int argc, char *argv[])
     }
 
     // Initialize the TypeWriter Configuration
-    // TODO: Move this to a different file and add other characters like brackets etc. Anything other than lowercase alphabets should cause slowdowns
-    struct PauseChar pauseChars[] = {
-        {'\n', 3.0},
-        {' ', 1.5},
-        {'.', 2.0},
-        {',', 1.75},
-    };
     TypeWriterConfig config = {
         .text = NULL,
         .cpm = 500,
         .variance = 250,
-        .pauseCharCount = 4,
-        .pauseChars = pauseChars,
+        .pauseMultiplier = 3.0,
     };
 
     // Parse the command-line arguments

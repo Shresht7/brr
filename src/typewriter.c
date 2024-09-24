@@ -8,16 +8,11 @@
 
 typedef struct
 {
-    char *text;         // The text to write
-    int cpm;            // The Characters-Per-Minute speed
-    int variance;       // The variance in the Characters-Per-Minute speed value
-    int pauseCharCount; // The number of elements in the pauseChar array
-    struct PauseChar
-    {
-        char character;   // Character to pause at
-        float multiplier; // Multiplier for the pause duration
-    } *pauseChars;        // Array of pause characters and their multipliers
-    int loop;             // Should loop indefinitely until closed
+    char *text;            // The text to write
+    int cpm;               // The Characters-Per-Minute speed
+    int variance;          // The variance in the Characters-Per-Minute speed value
+    float pauseMultiplier; // The ratio by which to increase the pause delay
+    int loop;              // Should loop indefinitely until closed
 } TypeWriterConfig;
 
 /// @brief Free dynamically allocated memory
@@ -33,22 +28,6 @@ void free_config(TypeWriterConfig *config)
 // ---------
 // EXECUTION
 // ---------
-
-/// @brief Determines if a character should cause a pause
-/// @param cfg The TypeWriterConfig containing pause characters
-/// @param c The character to check
-/// @return The pause multiplier if the character should cause a pause, otherwise 1.0
-float get_pause_multiplier(const TypeWriterConfig *cfg, char c)
-{
-    for (int i = 0; i < cfg->pauseCharCount; i++)
-    {
-        if (cfg->pauseChars[i].character == c)
-        {
-            return cfg->pauseChars[i].multiplier;
-        }
-    }
-    return 1.0;
-}
 
 /// @brief Writes the given text like a typewriter
 /// @param text The text to write to the screen
@@ -95,7 +74,11 @@ void typewriter(const TypeWriterConfig *cfg)
         {
             int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
             int pauseFor = (60 * 1000) / speed;
-            pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
+            // Apply multiplier if the character is not a lowercase alphabet
+            if (cfg->text[i] < 'a' || cfg->text[i] > 'z')
+            {
+                pauseFor *= cfg->pauseMultiplier;
+            }
             sleep(pauseFor);
         }
     }
