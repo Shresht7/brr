@@ -41,6 +41,10 @@ void typewriter(const TypeWriterConfig *cfg)
     /// If 1, we are currently in an ANSI escape sequence
     int in_escape_sequence = 0;
 
+    /// Keep track of the previously printed character, and speed up typing if we are
+    /// repeatedly printing the same character.
+    char prev = ' ';
+
     size_t len = strlen(cfg->text);
     for (int i = 0; i < len; i++)
     {
@@ -69,17 +73,31 @@ void typewriter(const TypeWriterConfig *cfg)
             continue; // Skip the delay
         }
 
-        // Delay the next character
-        if (isprint((unsigned char)cfg->text[i]))
+        // If this is an non-printable character, skip the delay and continue iterating
+        if (!isprint((unsigned char)cfg->text[i]))
         {
-            int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
-            int pauseFor = (60 * 1000) / speed;
-            // Apply multiplier if the character is not a lowercase alphabet
-            if ((cfg->text[i] != ' ') && (cfg->text[i] < 'a' || cfg->text[i] > 'z'))
-            {
-                pauseFor *= cfg->pauseMultiplier;
-            }
-            sleep(pauseFor);
+            continue;
         }
+
+        // Delay the next character
+        int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
+        int pauseFor = (60 * 1000) / speed;
+        // Apply multiplier if the character is not a lowercase alphabet
+        if ((cfg->text[i] != ' ') && (cfg->text[i] < 'a' || cfg->text[i] > 'z'))
+        {
+            pauseFor *= cfg->pauseMultiplier;
+        }
+
+        // If we are repeating the same character multiple times, reduce the delay
+        if (cfg->text[i] == prev)
+        {
+            pauseFor /= 2;
+        }
+        else
+        {
+            prev = cfg->text[i];
+        }
+
+        sleep(pauseFor);
     }
 }
