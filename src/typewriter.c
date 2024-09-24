@@ -73,16 +73,39 @@ void typewriter(const TypeWriterConfig *cfg)
     int speed_lower_bound = cfg->cpm - cfg->variance;
     int speed_upper_bound = cfg->cpm + cfg->variance;
 
+    /// If 1, we are currently in an ANSI escape sequence
+    int in_escape_sequence = 0;
+
     size_t len = strlen(cfg->text);
     for (int i = 0; i < len; i++)
     {
         printf("%c", cfg->text[i]);
         fflush(stdout); // Ensure the character is printed immediately
 
-        int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
-        int pauseFor = (60 * 1000) / speed;
-        pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
-        sleep(pauseFor);
+        // Check if the character is the start of an ANSI escape sequence
+        if (cfg->text[i] == '\x1b' && cfg->text[i + 1] == '[')
+        {
+            in_escape_sequence = 1;
+            continue; // Skip the delay
+        }
+
+        if (in_escape_sequence)
+        {
+            if (isalpha(cfg->text[i]))
+            {
+                in_escape_sequence = 0; // End of the ANSI escape sequence
+            }
+            continue; // Skip the delay
+        }
+
+        // Delay the next character
+        if (isprint((unsigned char)cfg->text[i]))
+        {
+            int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
+            int pauseFor = (60 * 1000) / speed;
+            pauseFor *= get_pause_multiplier(cfg, cfg->text[i]);
+            sleep(pauseFor);
+        }
     }
 }
 
