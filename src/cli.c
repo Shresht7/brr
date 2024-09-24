@@ -169,7 +169,9 @@ void print_help()
 /// @brief Enter the Alternate Buffer Screen
 void enter_alt_buffer()
 {
-    printf("\x1b[?1049h");
+    printf("\x1b[?1049h"); // Enter the Alternate Buffer
+    printf("\x1b[2J");     // Clear the screen
+    printf("\x1b[H");      // Move cursor to the top-left corner
 }
 
 /// @brief Exit the Alternate Buffer Screen
