@@ -65,6 +65,12 @@ void typewriter(const TypeWriterConfig *cfg)
     size_t len = strlen(cfg->text);
     for (int i = 0; i < len; i++)
     {
+        // If a keypress is detected, then exit immediately
+        if (key_pressed())
+        {
+            return;
+        }
+
         printf("%c", cfg->text[i]);
         fflush(stdout); // Ensure the character is printed immediately
 
@@ -82,12 +88,6 @@ void typewriter(const TypeWriterConfig *cfg)
                 in_escape_sequence = 0; // End of the ANSI escape sequence
             }
             continue; // Skip the delay
-        }
-
-        // If a keypress is detected, then exit immediately
-        if (key_pressed())
-        {
-            return;
         }
 
         // Delay the next character

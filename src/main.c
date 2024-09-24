@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
             // If a keypress is detected, then exit immediately
             if (key_pressed())
             {
+                get_pressed_key(); // Consume the key so that it doesn't bleed out
                 break;
             }
 

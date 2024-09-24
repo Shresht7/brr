@@ -50,6 +50,13 @@ int key_pressed()
 {
     return _kbhit();
 }
+
+/// @brief Get the pressed key
+/// @return the pressed key
+int get_pressed_key()
+{
+    return _getch();
+}
 #else
 /// @brief Set terminal mode to non-canonical and non-echo
 void set_terminal_mode()
@@ -78,5 +85,14 @@ int key_pressed()
     FD_ZERO(&fds);
     FD_SET(STDIN_FILENO, &fds);
     return select(STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
+}
+
+/// @brief Get the pressed key
+/// @return the pressed key
+int get_pressed_key()
+{
+    char c;
+    read(STDIN_FILENO, &c, 1);
+    return c;
 }
 #endif
