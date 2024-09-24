@@ -29,6 +29,15 @@ typedef struct
 // EXECUTION
 // ---------
 
+/// @brief Returns a random number between the given range
+/// @param lower The lower bound
+/// @param upper The upper bound
+/// @return A random number between lower and upper
+int get_random_number_between(int lower, int upper)
+{
+    return (rand() % (upper - lower + 1)) + lower;
+}
+
 /// @brief Writes the given text like a typewriter
 /// @param text The text to write to the screen
 void typewriter(const TypeWriterConfig *cfg)
@@ -73,14 +82,4 @@ void free_config(TypeWriterConfig *config)
     {
         free(config->text);
     }
-}
-
-int get_random_number_between(int lower, int upper)
-{
-    if (lower > upper)
-    {
-        fprintf(stderr, "Invalid bounds for random number generation\n");
-        exit(EXIT_FAILURE);
-    }
-    return (rand() % (upper - lower + 1)) + lower;
 }
