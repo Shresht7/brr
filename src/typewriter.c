@@ -87,7 +87,7 @@ void typewriter(const TypeWriterConfig *cfg)
         // If a keypress is detected, then exit immediately
         if (key_pressed())
         {
-            break;
+            return;
         }
 
         // Delay the next character

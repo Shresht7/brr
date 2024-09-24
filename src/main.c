@@ -84,6 +84,11 @@ int main(int argc, char *argv[])
         {
             typewriter(&config);
             printf("\n");
+            // If a keypress is detected, then exit immediately
+            if (key_pressed())
+            {
+                return;
+            }
         } while (config.loop);
         exit_alt_buffer();
     }
