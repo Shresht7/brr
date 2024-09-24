@@ -8,22 +8,11 @@
 
 typedef struct
 {
-    char *text;            // The text to write
     int cpm;               // The Characters-Per-Minute speed
     int variance;          // The variance in the Characters-Per-Minute speed value
     float pauseMultiplier; // The ratio by which to increase the pause delay
     int loop;              // Should loop indefinitely until closed
 } TypeWriterConfig;
-
-/// @brief Free dynamically allocated memory
-/// @param config
-void free_config(TypeWriterConfig *config)
-{
-    if (config->text)
-    {
-        free(config->text);
-    }
-}
 
 // ---------
 // EXECUTION
@@ -31,7 +20,7 @@ void free_config(TypeWriterConfig *config)
 
 /// @brief Writes the given text like a typewriter
 /// @param text The text to write to the screen
-void typewriter(const TypeWriterConfig *cfg)
+void typewriter(char *text, const TypeWriterConfig *cfg)
 {
     srand(time(NULL)); // Seed the random number generator
 
@@ -45,7 +34,7 @@ void typewriter(const TypeWriterConfig *cfg)
     /// repeatedly printing the same character.
     char prev = ' ';
 
-    size_t len = strlen(cfg->text);
+    size_t len = strlen(text);
     for (int i = 0; i < len; i++)
     {
         // If a keypress is detected, then exit immediately
@@ -54,11 +43,11 @@ void typewriter(const TypeWriterConfig *cfg)
             return;
         }
 
-        printf("%c", cfg->text[i]);
+        printf("%c", text[i]);
         fflush(stdout); // Ensure the character is printed immediately
 
         // Check if the character is the start of an ANSI escape sequence
-        if (cfg->text[i] == '\x1b' && cfg->text[i + 1] == '[')
+        if (text[i] == '\x1b' && text[i + 1] == '[')
         {
             in_escape_sequence = 1;
             continue; // Skip the delay
@@ -66,7 +55,7 @@ void typewriter(const TypeWriterConfig *cfg)
 
         if (in_escape_sequence)
         {
-            if (isalpha(cfg->text[i]))
+            if (isalpha(text[i]))
             {
                 in_escape_sequence = 0; // End of the ANSI escape sequence
             }
@@ -74,7 +63,7 @@ void typewriter(const TypeWriterConfig *cfg)
         }
 
         // If this is an non-printable character, skip the delay and continue iterating
-        if (!isprint((unsigned char)cfg->text[i]))
+        if (!isprint((unsigned char)text[i]))
         {
             continue;
         }
@@ -83,19 +72,19 @@ void typewriter(const TypeWriterConfig *cfg)
         int speed = get_random_number_between(speed_lower_bound, speed_upper_bound);
         int pauseFor = (60 * 1000) / speed;
         // Apply multiplier if the character is not a lowercase alphabet
-        if ((cfg->text[i] != ' ') && (cfg->text[i] < 'a' || cfg->text[i] > 'z'))
+        if ((text[i] != ' ') && (text[i] < 'a' || text[i] > 'z'))
         {
             pauseFor *= cfg->pauseMultiplier;
         }
 
         // If we are repeating the same character multiple times, reduce the delay
-        if (cfg->text[i] == prev)
+        if (text[i] == prev)
         {
             pauseFor /= 2;
         }
         else
         {
-            prev = cfg->text[i];
+            prev = text[i];
         }
 
         sleep(pauseFor);

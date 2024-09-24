@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
 
     // Initialize the TypeWriter Configuration
     TypeWriterConfig config = {
-        .text = NULL,
         .cpm = 500,
         .variance = 250,
         .pauseMultiplier = 3.0,
@@ -38,19 +37,20 @@ int main(int argc, char *argv[])
     int result = parse_arguments(argc, argv, &config);
     if (result != -1)
     {
-        free_config(&config);
         return result;
     }
+
+    char *text = "";
 
     // Check if input is interactive (from a terminal) or redirected (from a file descriptor like STDIN)
     if (!is_interactive(stdin))
     {
         // Read the text from standard input (STDIN)
-        config.text = read_stdin();
-        if (!config.text)
+        text = read_stdin();
+        if (!text)
         {
             fprintf(stderr, "Error: Failed to read from STDIN\n");
-            free_config(&config);
+            free(text);
             return EXIT_FAILURE;
         }
     }
@@ -58,11 +58,11 @@ int main(int argc, char *argv[])
     {
         // Read text from the terminal interactively
         printf("Enter text: ");
-        config.text = read_stdin_interactively();
-        if (!config.text)
+        text = read_stdin_interactively();
+        if (!text)
         {
             fprintf(stderr, "Error: Failed to read from STDIN interactively\n");
-            free_config(&config);
+            free(text);
             return EXIT_FAILURE;
         }
     }
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
         do
         {
             // ...Run the typewriter
-            typewriter(&config);
+            typewriter(text, &config);
             printf("\n");
 
             // If a keypress is detected, then exit immediately
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     else
     {
         // ... Otherwise, run the typewriter once
-        typewriter(&config);
+        typewriter(text, &config);
     }
 
 // Reset terminal setup for key capture on non-windows os
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
     // Free the allocated memory
     if (!is_interactive(stdin))
     {
-        free_config(&config);
+        free(text);
     }
 
     return 0; // Exit code 0 for success

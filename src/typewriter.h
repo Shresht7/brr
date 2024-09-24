@@ -3,14 +3,13 @@
 
 typedef struct
 {
-    char *text;
     int cpm;
     int variance;
     float pauseMultiplier;
     int loop;
 } TypeWriterConfig;
 
-void typewriter(const TypeWriterConfig *config);
+void typewriter(char *text, const TypeWriterConfig *config);
 
 void free_config(TypeWriterConfig *config);
 
