@@ -161,7 +161,7 @@ void print_version()
     printf("%s", VERSION);
 }
 
-const char *HELP_MESSAGE = "\nUsage: typwr [OPTIONS]\n"
+const char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
                            "\n"
                            "Options:\n"
                            "\n"
@@ -175,7 +175,7 @@ const char *HELP_MESSAGE = "\nUsage: typwr [OPTIONS]\n"
                            "\n"
                            "Examples:\n"
                            "\n"
-                           "  cat file.txt | typwr     Pipe the text in\n\n";
+                           "  cat file.txt | brr     Pipe the text in\n\n";
 
 /// @brief Prints the help message
 void print_help()

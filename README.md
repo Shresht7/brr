@@ -1,4 +1,4 @@
-# `typwr`
+# `brr`
 
 Writes stuff to the console like a typewriter!
 
@@ -7,7 +7,7 @@ This project is a command-line application written in C that simulates a typewri
 ## Usage
 
 ```
-typwr [OPTIONS]
+brr [OPTIONS]
 ```
 
 ### Options
@@ -21,7 +21,7 @@ typwr [OPTIONS]
 ### Examples
 
 ```
-git log | typwr 
+git log | brr 
 ```
 
 ---
