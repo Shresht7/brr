@@ -129,6 +129,10 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
                 return 1;
             }
         }
+        else if ((contains(argv[i], "-l") || contains(argv[i], "--loop")))
+        {
+            cfg->loop = 1;
+        }
     }
     return -1;
 }
@@ -152,6 +156,7 @@ void print_help()
     printf("\n");
     printf("  -c, --cpm <cpm>         Characters per minute (default: 500)\n");
     printf("  -v, --variance <ms>     The variance in the cpm speed (default: 250)\n");
+    printf("  -l, --loop              Repeat typing the same content indefinitely\n");
     printf("\n");
     printf("  -h, --help              Show this help message\n");
     printf("  -V, --version           Show the version number\n");
