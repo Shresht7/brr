@@ -77,7 +77,21 @@ int main(int argc, char *argv[])
     set_terminal_mode();
 #endif
 
-    typewriter(&config);
+    if (config.loop)
+    {
+        enter_alt_buffer();
+        do
+        {
+            typewriter(&config);
+            printf("\x1b[2J"); // Clear the screen
+            printf("\x1b[H");  // Move cursor to the top-left corner
+        } while (config.loop);
+        exit_alt_buffer();
+    }
+    else
+    {
+        typewriter(&config);
+    }
 
 #ifndef _WIN32
     reset_terminal_mode();
