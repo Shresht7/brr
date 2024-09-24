@@ -12,7 +12,7 @@ typedef struct
         char character;   // Character to pause at
         float multiplier; // Multiplier for the pause duration
     } *pauseChars;        // Array of pause characters and their multipliers
-    int loop;
+    int loop;             // Should loop indefinitely until closed
 } TypeWriterConfig;
 
 void typewriter(const TypeWriterConfig *config);
