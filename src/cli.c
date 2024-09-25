@@ -133,6 +133,10 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
         {
             cfg->loop = 1;
         }
+        else if ((contains(argv[i], "-r") || contains(argv[i], "--repeat")))
+        {
+            cfg->loop = 1;
+        }
         else if ((contains(argv[i], "-p") || contains(argv[i], "--pause")))
         {
             if (i + 1 < argc)
