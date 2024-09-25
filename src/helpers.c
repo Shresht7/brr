@@ -1,5 +1,6 @@
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef _WIN32
 #include <windows.h> // For Sleep function on Windows
@@ -7,6 +8,7 @@
 #else
 #include <unistd.h> // For usleep function on UNIX based systems
 #include <termios.h>
+#include <sys/ioctl.h>
 #include <sys/select.h>
 #endif
 
@@ -59,37 +61,30 @@ int get_pressed_key()
     return _getch();
 }
 #else
-/// @brief Set terminal mode to non-canonical and non-echo
-void set_terminal_mode()
-{
-    struct termios tty;
-    tcgetattr(STDIN_FILENO, &tty);
-    tty.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &tty);
-}
+struct termios orig_termios;
 
-/// @brief Reset terminal mode to canonical and echo
 void reset_terminal_mode()
 {
-    struct termios tty;
-    tcgetattr(STDIN_FILENO, &tty);
-    tty.c_lflag |= (ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+    tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 }
 
-/// @brief Check if a key has been pressed
-/// @return 1 if a key has been pressed, 0 otherwise
+void set_terminal_mode()
+{
+    struct termios new_termios;
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    memcpy(&new_termios, &orig_termios, sizeof(new_termios));
+    new_termios.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+    atexit(reset_terminal_mode);
+}
+
 int key_pressed()
 {
-    struct timeval tv = {0L, 0L};
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(STDIN_FILENO, &fds);
-    return select(STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
+    int bytes_available;
+    ioctl(STDIN_FILENO, FIONREAD, &bytes_available);
+    return bytes_available > 0;
 }
 
-/// @brief Get the pressed key
-/// @return the pressed key
 int get_pressed_key()
 {
     char c;
