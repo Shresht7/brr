@@ -168,20 +168,20 @@ void print_version()
 }
 
 char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
-                           "\n"
-                           "Options:\n"
-                           "\n"
-                           "  -c, --cpm <number>       Characters per Minute (default: 500)\n"
-                           "  -v, --variance <number>  The variance in cpm speed (default: 250)\n"
-                           "  -p, --pause <number>     The rate by which to slow down the speed when typing hard to type characters (default: 2.0)\n"
-                           "  -l, --loop               Repeat typing the same content indefinitely until a key is pressed\n"
-                           "\n"
-                           "  -h, --help               Show the help message\n"
-                           "  -V, --version            Show the version number\n"
-                           "\n"
-                           "Examples:\n"
-                           "\n"
-                           "  cat file.txt | brr     Pipe the text in\n\n";
+                     "\n"
+                     "Options:\n"
+                     "\n"
+                     "  -c, --cpm <number>       Characters per Minute (default: 500)\n"
+                     "  -v, --variance <number>  The variance in cpm speed (default: 250)\n"
+                     "  -p, --pause <number>     The rate by which to slow down the speed when typing hard to type characters (default: 3.0)\n"
+                     "  -l, --loop               Repeat typing the same content indefinitely until a key is pressed\n"
+                     "\n"
+                     "  -h, --help               Show the help message\n"
+                     "  -V, --version            Show the version number\n"
+                     "\n"
+                     "Examples:\n"
+                     "\n"
+                     "  cat file.txt | brr     Pipe the text in\n\n";
 
 /// @brief Prints the help message
 void print_help()
