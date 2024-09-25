@@ -2,6 +2,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "helpers.h"
+
 // ------------------------
 // TYPEWRITER CONFIGURATION
 // ------------------------

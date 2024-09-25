@@ -4,6 +4,7 @@
 
 #include "typewriter.h"
 #include "cli.h"
+#include "helpers.h"
 
 // ====
 // MAIN
