@@ -5,7 +5,7 @@ typedef struct
 {
     int cpm;
     int variance;
-    float pauseMultiplier;
+    double pauseMultiplier;
     int loop;
 } TypeWriterConfig;
 

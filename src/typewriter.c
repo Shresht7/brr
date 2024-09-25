@@ -8,10 +8,10 @@
 
 typedef struct
 {
-    int cpm;               // The Characters-Per-Minute speed
-    int variance;          // The variance in the Characters-Per-Minute speed value
-    float pauseMultiplier; // The ratio by which to increase the pause delay
-    int loop;              // Should loop indefinitely until closed
+    int cpm;                // The Characters-Per-Minute speed
+    int variance;           // The variance in the Characters-Per-Minute speed value
+    double pauseMultiplier; // The ratio by which to increase the pause delay
+    int loop;               // Should loop indefinitely until closed
 } TypeWriterConfig;
 
 // ---------
