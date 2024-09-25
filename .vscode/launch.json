@@ -8,7 +8,10 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/out/build/GCC 13.2.0 x86_64-w64-mingw32/Debug/brr.exe",
+            "linux": {
+                "program": "${workspaceFolder}/build/brr",
+            },
+            "program": "${workspaceFolder}/build/GCC/Debug/brr.exe",
             "args": [],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
