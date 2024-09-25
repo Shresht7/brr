@@ -13,19 +13,19 @@
 int main(int argc, char *argv[])
 {
     // `-h` and `--help`: Show help message
-    if (contains(argc, argv, "-h"))
+    if (argc <= 1 || contains(argv[1], "-h"))
     {
         print_help();
         return 0;
     }
-    if (contains(argc, argv, "--help"))
+    if (contains(argv[1], "--help"))
     {
         type_help();
         return 0;
     }
 
     // `-V`, `--version`: Show version number
-    if ((contains(argc, argv, "-V") || contains(argc, argv, "--version")))
+    if ((argc <= 2) && (contains(argv[1], "-V") || contains(argv[1], "--version")))
     {
         print_version();
         return 0;

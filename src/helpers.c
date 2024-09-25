@@ -22,16 +22,9 @@ void sleep(int duration)
 
 /// @brief Returns true if the input contains the given string
 /// @return a boolean indicating if the input contains the given string
-int contains(int argc, char *argv[], char *str)
+int contains(char *input, char *str)
 {
-    for (int i = 0; i < argc; i++)
-    {
-        if (strcmp(argv[i], str) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
+    return strcmp(input, str) == 0;
 }
 
 /// @brief Returns a random number between the given range
