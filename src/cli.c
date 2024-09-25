@@ -164,7 +164,7 @@ const char *VERSION = "v0.1.0";
 /// @brief Prints the version number
 void print_version()
 {
-    printf("%s", VERSION);
+    printf("%s\n", VERSION);
 }
 
 char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
@@ -186,7 +186,7 @@ char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
 /// @brief Prints the help message
 void print_help()
 {
-    printf("%s", HELP_MESSAGE);
+    printf("%s\n", HELP_MESSAGE);
 }
 
 /// @brief Types the help message as a demonstration
