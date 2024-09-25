@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 
 #ifdef _WIN32
 #include <windows.h> // For Sleep function on Windows
@@ -11,7 +12,7 @@
 
 /// @brief Platform Independent Sleep
 /// @param duration The duration in milliseconds to sleep for
-void sleep(int duration)
+void delay(int duration)
 {
 #ifdef _WIN32
     Sleep(duration);

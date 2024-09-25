@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 #include "helpers.h"
 
@@ -89,6 +91,6 @@ void typewriter(char *text, const TypeWriterConfig *cfg)
             prev = text[i];
         }
 
-        sleep(pauseFor);
+        delay(pauseFor);
     }
 }

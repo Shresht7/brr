@@ -5,6 +5,8 @@
 // isatty is undefined in Windows. _isatty must be used from the io.h library
 #ifdef _WIN32
 #include <io.h>
+#else
+#include <unistd.h>
 #endif
 
 #include "typewriter.h"
@@ -22,7 +24,7 @@ int is_interactive(FILE *stream)
 #ifdef _WIN32
     return _isatty(_fileno(stream));
 #else
-    return isatty(_fileno(stream));
+    return isatty(fileno(stream));
 #endif
 }
 
@@ -75,7 +77,7 @@ char *read_stdin_interactively()
 
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
-        strcpy_s(text, sizeof(buffer), buffer);
+        strcpy(text, buffer);
         // Remove newline character if present
         size_t len = strlen(text);
         if (len > 0 && text[len - 1] == '\n')
@@ -165,7 +167,7 @@ void print_version()
     printf("%s", VERSION);
 }
 
-const char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
+char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
                            "\n"
                            "Options:\n"
                            "\n"
