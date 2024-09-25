@@ -3,7 +3,7 @@
 
 void sleep(int duration);
 
-int contains(char *input, char *str);
+int contains(int argc, char *argv[], char *str);
 
 int get_random_number_between(int lower, int upper);
 

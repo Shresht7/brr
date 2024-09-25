@@ -105,7 +105,7 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
 {
     for (int i = 0; i < argc; i++)
     {
-        if ((contains(argv[i], "-c")) || (contains(argv[i], "--cpm")))
+        if ((contains(argc, argv, "-c")) || (contains(argc, argv, "--cpm")))
         {
             if (i + 1 < argc)
             {
@@ -117,7 +117,7 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
                 return 1;
             }
         }
-        else if ((contains(argv[i], "-v") || contains(argv[i], "--variance")))
+        else if ((contains(argc, argv, "-v") || contains(argc, argv, "--variance")))
         {
             if (i + 1 < argc)
             {
@@ -129,15 +129,15 @@ int parse_arguments(int argc, char *argv[], TypeWriterConfig *cfg)
                 return 1;
             }
         }
-        else if ((contains(argv[i], "-l") || contains(argv[i], "--loop")))
+        else if ((contains(argc, argv, "-l") || contains(argc, argv, "--loop")))
         {
             cfg->loop = 1;
         }
-        else if ((contains(argv[i], "-r") || contains(argv[i], "--repeat")))
+        else if ((contains(argc, argv, "-r") || contains(argc, argv, "--repeat")))
         {
             cfg->loop = 1;
         }
-        else if ((contains(argv[i], "-p") || contains(argv[i], "--pause")))
+        else if ((contains(argc, argv, "-p") || contains(argc, argv, "--pause")))
         {
             if (i + 1 < argc)
             {
