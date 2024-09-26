@@ -4,6 +4,8 @@ Writes stuff to the console like a typewriter!
 
 This project is a command-line application written in C that simulates a typewriter effect when printing text to the console. The program types out the text with variable speed, adding a pause after certain characters to mimic the behavior of a typewriter. This is my first time using C in a proper project.
 
+![Demo](./docs/demo.gif)
+
 ## Usage
 
 ```
