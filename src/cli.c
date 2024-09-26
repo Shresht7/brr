@@ -181,7 +181,8 @@ char *HELP_MESSAGE = "\nUsage: brr [OPTIONS]\n"
                      "\n"
                      "Examples:\n"
                      "\n"
-                     "  cat file.txt | brr     Pipe the text in\n\n";
+                     "  git log | brr\n"
+                     "  cat file.txt | brr\n\n";
 
 /// @brief Prints the help message
 void print_help()

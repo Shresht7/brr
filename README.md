@@ -24,6 +24,7 @@ brr [OPTIONS]
 
 ```
 git log | brr 
+cat ./README.md | brr --cpm 1500
 ```
 
 ---
