@@ -9,7 +9,7 @@ This project is a command-line application written in C that simulates a typewri
 ## Usage
 
 ```
-brr [OPTIONS]
+something-else | brr [OPTIONS]
 ```
 
 ### Options
